@@ -1,43 +1,167 @@
 <div>
-  <div class="text-center mt-10">
-    <h1 class="text-3xl font-bold">LetsConnect Chat-App</h1>
-    <p class="text-gray-600 mt-2">Connect with your friends and family!</p>
-  </div>
 
   <div *ngIf="!isUserJoined" class="flex flex-col items-center mt-10">
-    <input type="text" placeholder="Enter Your Name"
-      class="input input-bordered w-full max-w-xs"
-      [(ngModel)]="userName"
-    />
-    <button class="btn btn-primary mt-4" (click)="onUserJoin()">Connect</button>
+    <div class="min-h-screen flex items-center justify-center w-full darkNNN:bg-gray-950">
+      <div class="bg-white darkNNN:bg-gray-900 shadow-md rounded-lg px-8 py-6 max-w-md">
+        <h1 class="text-2xl font-bold text-center mb-4 darkNNN:text-gray-200">Let'sConnect!</h1>
+        <form class="space-y-4" [formGroup]="loginForm" (submit)="onLoginUser()">
+          <div class="mb-4">
+            <label for="Name" class="block text-sm font-medium text-gray-700 darkNNN:text-gray-300 mb-2">Name</label>
+            <input type="Name" id="Name" class="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter your Name"
+              formControlName="name"
+            >
+          </div>
+          <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700 darkNNN:text-gray-300 mb-2">Email</label>
+            <input type="email" id="email" class="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="your@email.com"
+              formControlName="email"
+            >
+          </div>
+          <div class="mb-4">
+            <label for="password" class="block text-sm font-medium text-gray-700 darkNNN:text-gray-300 mb-2">Password</label>
+            <input type="password" id="password" class="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter your password"
+              formControlName="password"
+            >
+            <a href="#"
+              class="text-xs text-gray-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Forgot
+              Password?</a>
+          </div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center">
+              <input type="checkbox" id="remember" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 focus:outline-none" checked>
+              <label for="remember" class="ml-2 block text-sm text-gray-700 darkNNN:text-gray-300">Remember me</label>
+            </div>
+            <a href="#"
+              class="text-xs text-indigo-500 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Create
+              Account</a>
+          </div>
+          <button 
+            type="submit" 
+            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
   </div>
 
-  <div *ngIf="isUserJoined">
-    <div class="mt-4">
-      <p class="text-gray-600">Socket Status: <span class="text-green-500">Connected</span></p>
-    </div>
 
-    <div class="mt-4">
-      <p class="text-gray-600">Messages:</p>
-      <div class="list-disc pl-5">
-        <div class="text-gray-800" *ngFor="let message of allMessages">
-          @if (message.type === 'message') {
-            <b>{{message.userName}}</b>: {{message.message}}
-          } @else {
-            ----- {{message.message}} ------
-          }
+  <div *ngIf="isUserJoined">
+    <div class="bg-gray-100 flex h-screen flex-col">
+      <!-- Chat Header -->
+      <div class="bg-blue-600 text-white p-4 shadow-lg">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+          <div class="space-x-4 flex items-center">
+            <img src="https://numan-dev.web.app/images/my-pic.png" alt="Profile" class="w-10 h-10 border-white rounded-full border-2 object-cover" />
+            <div>
+              <h1 class="font-bold">LetsConnect</h1>
+              <a href="#" target="_blank" class="text-sm text-blue-100 hover:text-white transition"> View Details → </a>
+            </div>
+          </div>
+          <div class="space-x-4 flex items-center">
+            <button class="p-2 hover:bg-blue-700 rounded-full transition">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+            </button>
+            <button class="p-2 hover:bg-blue-700 rounded-full transition">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+            </button>
+            <button class="p-2 hover:bg-blue-700 rounded-full transition">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Chat Messages -->
+      <div class="p-4 chat-container flex-1 overflow-y-auto">
+        <div class="max-w-4xl space-y-4 mx-auto">
+          <ng-container *ngFor="let messageData of allMessages">
+            @if(messageData.type === "chat_event") {
+              <p class="flex items-center w-full">
+                <span class="flex-grow bg-gray-200 rounded h-1"></span>
+                <span class="">
+                  <div class="py-1 px-4 bg-blue-200 rounded-full text-xs"> {{messageData.userData.name}} joined </div>
+                </span>
+                <span class="flex-grow bg-gray-200 rounded h-1"></span>
+              </p>
+            } @else if(messageData.userData.email === loginForm.value.email) {
+              <div class="space-x-2 flex items-start justify-end">
+                <div class="flex flex-col items-end">
+                  <div class="bg-blue-600 text-white rounded-lg p-3 shadow-md max-w-md rounded-tr-none">
+                    <p>
+                      {{messageData.message}}
+                    </p>
+                  </div>
+                  <span class="text-gray-500 text-xs message-time">11:43 AM</span>
+                </div>
+                <img src="https://numan-dev.web.app/images/my-pic.png" alt="User" class="w-8 h-8 rounded-full object-cover" />
+              </div>
+            } @else {
+              <div class="space-x-2 flex items-start">
+                <img src="https://numan-dev.web.app/images/my-pic.png" alt="Numan" class="w-8 h-8 rounded-full object-cover" />
+                <div>
+                  <div class="bg-white rounded-lg p-3 shadow-md max-w-md rounded-tl-none">
+                    <p>
+                      {{messageData.message}}
+                    </p>
+                  </div>
+                  <span class="text-gray-500 text-xs message-time">11:42 AM</span>
+                </div>
+              </div>
+            }
+          </ng-container>
+
+
+          <!-- Typing Indicator -->
+          <div class="space-x-2 flex items-start">
+            <img src="https://numan-dev.web.app/images/my-pic.png" alt="Numan" class="w-8 h-8 rounded-full object-cover" />
+            <div class="bg-white rounded-lg p-3 shadow-md rounded-tl-none">
+              <div class="typing-indicator">
+                <span>•</span>
+                <span>•</span>
+                <span>•</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    
+      <!-- Chat Input -->
+      <div class="bg-white p-4 border-t">
+        <div class="max-w-4xl space-x-4 mx-auto flex items-center">
+          <button class="py-2 px-1 pl-2 text-gray-500 hover:text-gray-700 transition">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </button>
+          <button class="py-2 px-1 text-gray-500 hover:text-gray-700 transition">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+            </svg>
+          </button>
+          <input type="text"
+            placeholder="Type your message..."
+            class="p-2 focus:border-blue-500 flex-1 rounded border focus:outline-none" 
+            [(ngModel)]="message"
+          />
+          <button class="p-2 text-white bg-blue-600 hover:bg-blue-700 rounded-full transition"
+            (click)="onMessageSend()"
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+          </button>
         </div>
       </div>
     </div>
-
-    <div class="flex flex-col items-center mt-10">
-      <input type="text" placeholder="Type your message"
-        class="input input-bordered w-full max-w-xs"
-        [(ngModel)]="message"
-      />
-      <button class="btn btn-primary mt-4" (click)="onMessageSend()">Send</button>
-    </div>
-
   </div>
 
 </div>
