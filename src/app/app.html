@@ -1,0 +1,43 @@
+<div>
+  <div class="text-center mt-10">
+    <h1 class="text-3xl font-bold">LetsConnect Chat-App</h1>
+    <p class="text-gray-600 mt-2">Connect with your friends and family!</p>
+  </div>
+
+  <div *ngIf="!isUserJoined" class="flex flex-col items-center mt-10">
+    <input type="text" placeholder="Enter Your Name"
+      class="input input-bordered w-full max-w-xs"
+      [(ngModel)]="userName"
+    />
+    <button class="btn btn-primary mt-4" (click)="onUserJoin()">Connect</button>
+  </div>
+
+  <div *ngIf="isUserJoined">
+    <div class="mt-4">
+      <p class="text-gray-600">Socket Status: <span class="text-green-500">Connected</span></p>
+    </div>
+
+    <div class="mt-4">
+      <p class="text-gray-600">Messages:</p>
+      <div class="list-disc pl-5">
+        <div class="text-gray-800" *ngFor="let message of allMessages">
+          @if (message.type === 'message') {
+            <b>{{message.userName}}</b>: {{message.message}}
+          } @else {
+            ----- {{message.message}} ------
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-center mt-10">
+      <input type="text" placeholder="Type your message"
+        class="input input-bordered w-full max-w-xs"
+        [(ngModel)]="message"
+      />
+      <button class="btn btn-primary mt-4" (click)="onMessageSend()">Send</button>
+    </div>
+
+  </div>
+
+</div>
